@@ -13,16 +13,26 @@ header{
 }
 
 #instructions{
+  border: 2px solid black;
+  border-radius: 0.5em;
   max-width: 45%;
+  padding: 0.5em;
 }
 
 #login-or-create-forms{
+  border: 2px solid black;
+  border-radius: 0.5em;
   max-width: 45%;
   display: flex;
+
+  padding: 0.5em;
 }
 
 #change-password-form{
+  border: 2px solid black;
+  border-radius: 0.5em;
   max-width: 45%;
+  padding: 0.5em;
 }
 
 h2{

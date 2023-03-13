@@ -1,9 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 
 const App = () => {
   const [user, setUser] = useState({})
+  const [firebaseToken , setFirebaseToken] = useState({})
+
+  const userExists = () => {
+    if (Object.keys(user).length > 0) return false;
+
+    for (const key in Object.keys(user)) {
+      if (key === undefined || key === "") return false;                                    // there are blank keys
+      if (user[key] === null || user[key] !== undefined || user[key] === "") return false;  // if there are null values in any key/value pair
+    }
+
+    return true;
+  }
 
   return (
     <div id="App">
@@ -13,19 +24,21 @@ const App = () => {
         <p>This interface is a standard React-based implementaiton.</p>
       </header>
 
+      <ProfileDisplay user={user} />
       <div id="main-container">
         <InstructionDisplay />
 
         {
           // replace this with a better user-check
-          Object.keys(user).length !== 0 ?
+          userExists ?
 
             <div id="login-or-create-forms">
               <LoginForm setUser={setUser} />
 
               <CreateAccountForm setUser={setUser} />
-            </div> : <ChangePasswordForm user={user} />
-
+            </div>
+            :
+            <ChangePasswordForm user={user} />
         }
 
       </div>
@@ -35,7 +48,7 @@ const App = () => {
 
 
 
-const LoginForm = () => {
+const LoginForm = props => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
@@ -59,7 +72,7 @@ const LoginForm = () => {
   </div>
 }
 
-const CreateAccountForm = () => {
+const CreateAccountForm = props => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [passwordConfirmation, setPasswordConfirmation] = useState("")
@@ -89,7 +102,7 @@ const CreateAccountForm = () => {
   </div>
 }
 
-const ChangePasswordForm = () => {
+const ChangePasswordForm = props => {
   const [currentPassword, setCurrentPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [confirmNewPassword, setConfirmNewPassword] = useState("")
@@ -119,17 +132,28 @@ const InstructionDisplay = () => {
     <h2>Challenge instructions</h2>
     <p>Please complete the assessment below. If you have any questions or challenges while completing this assessment, feel free to reach out and ask for clarification.</p>
 
-    <p>Create a website that allows a user to create an account and then login to that account.
+    <ul>
+    <li>Create a website that allows a user to create an account and then login to that account.
       Their account should take a username, email, and password. There should be an option to change the password while logged in.
-      The user account database should be created in Firebase while the rest can be structured in whatever web development languages you’d like.</p>
+      The user account database should be created in Firebase while the rest can be structured in whatever web development languages you’d like.</li>
 
-    <p>This website should make a single API call from an API you have written in C#.</p>
+    <li>This website should make a single API call from an API you have written in C#.</li>
 
-    <p>Outside of these instructions, this assessment is open ended. Have fun with it and let your personal programming style shine through. Make it as weird or unique as you’d like.</p>
+    <li>Outside of these instructions, this assessment is open ended. Have fun with it and let your personal programming style shine through. Make it as weird or unique as you’d like.</li>
 
-    <p>Please document your code. Feel free to host this project online for review but the final submission will be in the form of a GitHub repository link. This is due by next Friday, the 17th.</p>
+    <li>Please document your code. Feel free to host this project online for review but the final submission will be in the form of a GitHub repository link. This is due by next Friday, the 17th.</li>
+    </ul>
 
     <p>Thank you for your interest in Custom Color 3D!</p>
+  </div>
+}
+
+const ProfileDisplay = props => {
+  const LogoutButton = () => <button onClick={()=>{}}>Logout</button>
+
+  return props.user ? <div>Please Sign In</div> : <div>
+    User Display!
+    <LogoutButton />
   </div>
 }
 
