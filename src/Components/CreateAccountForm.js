@@ -19,7 +19,7 @@ const CreateAccountForm = props => {
                 .then(resp => {
                     // this is a place to temporatily log the response from the Firebase Server
                     console.log("User Credentials from Server (FOR DEVELOPMENT/DEMONSTRATION PURPOSES ONLY)", resp)
-                    return resp.json()
+                    // return resp.json()
                 })
                 .then(json => {
 
@@ -31,16 +31,16 @@ const CreateAccountForm = props => {
         <h2>Create New Account</h2>
         <form onSubmit={onSubmit}>
             <label>Username:</label>
-            <input type="text" name="username" onChange={setUsername} value={username} placeholder="Enter Username..." />
+            <input type="text" name="username" onChange={e => { setUsername(e.target.value) }} value={username} placeholder="Enter Username..." />
 
             <label>Email:</label>
-            <input type="email" name="email" onChange={setEmail} value={email} placeholder="Enter Email..." />
+            <input type="email" name="email" onChange={e => { setEmail(e.target.value) }} value={email} placeholder="Enter Email..." />
 
             <label>Password:</label>
-            <input type="password" name="password" onChange={setPassword} value={password} placeholder="Enter Password..." />
+            <input type="password" name="password" onChange={e => { setPassword(e.target.value) }} value={password} placeholder="Enter Password..." />
 
             <label>Confirm Password:</label>
-            <input type="password-confirmation" name="password-confirmation" onChange={setPasswordConfirmation} value={passwordConfirmation} placeholder="Confirm Password..." />
+            <input type="password" name="password-confirmation" onChange={e => setPasswordConfirmation(e.target.value)} value={passwordConfirmation} placeholder="Confirm Password..." />
 
             <input type="submit" value="Log In" />
 

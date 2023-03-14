@@ -22,10 +22,10 @@ const LoginForm = props => {
         <h2>Login</h2>
         <form onSubmit={onSubmit}>
             <label>Email:</label>
-            <input type="email" name="email" onChange={setEmail} value={email} placeholder="Enter Email Address..." />
+            <input type="email" name="email" onChange={(e) => { setEmail(e.target.value) }} value={email} placeholder="Enter Email Address..." />
 
             <label>Password:</label>
-            <input type="password" name="password" onChange={setPassword} value={password} placeholder="Enter Password..." />
+            <input type="password" name="password" onChange={(e) => { setPassword(e.target.value) }} value={password} placeholder="Enter Password..." />
 
             <input type="submit" value="Log In" />
 
