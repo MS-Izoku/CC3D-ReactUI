@@ -1,6 +1,8 @@
 import './App.css';
 import { useState } from 'react';
-
+import { auth } from './firebase.js';   // this is the auth method from the firebase.js file we made locally, not the firebase npm package
+import { signInWithEmailAndPassword } from 'firebase/auth';  // this method is actually from the firebase npm package, not the local firebase.js config
+import { createUserWithEmailAndPassword } from 'firebase/auth'; // this method is actually from the firebase npm package, not the local firebase.js config
 
 
 const App = () => {
@@ -32,7 +34,6 @@ const App = () => {
         {
           // replace this with a better user-check
           userExists ?
-
             <div id="login-or-create-forms">
               <LoginForm setUser={setUser} />
 
@@ -47,28 +48,38 @@ const App = () => {
   );
 }
 
-
-
 const LoginForm = props => {
-  //const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
+  const [error, setError] = useState()
 
   const onSubmit = (e) => {
     e.preventDefault(); // prevents the page from auto-refreshing when logging in
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(resp => {
+        // this is a place to temporatily log the response from the Firebase Server
+        console.log("User Credentials from Server (FOR DEVELOPMENT/DEMONSTRATION PURPOSES ONLY)", resp)
+        return resp.json() // turn our server response into parsablle JSON
+      })
   }
 
   return <div>
     <h2>Login</h2>
     <form onSubmit={onSubmit}>
       <label>Email:</label>
-      <input type="email" name="email" onChange={setEmail} value={email} placeholder="Enter Email Address..."/>
+      <input type="email" name="email" onChange={setEmail} value={email} placeholder="Enter Email Address..." />
 
       <label>Password:</label>
       <input type="password" name="password" onChange={setPassword} value={password} placeholder="Enter Password..." />
 
+      <input type="submit" value="Log In" />
 
-      <input type="submit" />
+      {
+        // if there is an error, render it, otherwise render a react fragment (the react markup equivilent of NULL)
+        error !== null ? <div>{error}</div> : <></>
+      }
+
     </form>
   </div>
 }
@@ -78,52 +89,86 @@ const CreateAccountForm = props => {
   const [password, setPassword] = useState("")
   const [passwordConfirmation, setPasswordConfirmation] = useState("")
   const [email, setEmail] = useState("")
+  const [error, setError] = useState()
 
   const onSubmit = (e) => {
     e.preventDefault(); // prevents the page from auto-refreshing when logging in
+
+    if (password !== passwordConfirmation)
+      setError("Password and Confirmation do not match")
+    else {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(resp => {
+          // this is a place to temporatily log the response from the Firebase Server
+          console.log("User Credentials from Server (FOR DEVELOPMENT/DEMONSTRATION PURPOSES ONLY)", resp)
+          return resp.json()
+        })
+        .then(json => {
+
+        })
+    }
+
+
   }
 
   return <div>
     <h2>Create New Account</h2>
     <form onSubmit={onSubmit}>
       <label>Username:</label>
-      <input type="text" name="username" onChange={setUsername} value={username} placeholder="Enter Username..."/>
+      <input type="text" name="username" onChange={setUsername} value={username} placeholder="Enter Username..." />
 
       <label>Email:</label>
-      <input type="email" name="email" onChange={setEmail} value={email} placeholder="Enter Email..."/>
+      <input type="email" name="email" onChange={setEmail} value={email} placeholder="Enter Email..." />
 
       <label>Password:</label>
-      <input type="password" name="password" onChange={setPassword} value={password} placeholder="Enter Password..."/>
+      <input type="password" name="password" onChange={setPassword} value={password} placeholder="Enter Password..." />
 
       <label>Confirm Password:</label>
-      <input type="password-confirmation" name="password-confirmation" onChange={setPasswordConfirmation} value={passwordConfirmation} placeholder="Confirm Password..."/>
+      <input type="password-confirmation" name="password-confirmation" onChange={setPasswordConfirmation} value={passwordConfirmation} placeholder="Confirm Password..." />
 
-      <input type="submit" />
+      <input type="submit" value="Log In" />
+
+      {
+        // if there is an error, render it, otherwise render a react fragment (the react markup equivilent of NULL)
+        error !== null ? <div>{error}</div> : <></>
+      }
     </form>
   </div>
 }
 
 const ChangePasswordForm = props => {
   const [currentPassword, setCurrentPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [newPassword, setNewPassword] = useState("")
   const [confirmNewPassword, setConfirmNewPassword] = useState("")
+  const [error, setError] = useState()
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (newPassword !== confirmNewPassword) {
+      setError("New Password and Confirmation must match");
+    }
+    else {
+
+    }
   }
 
   return <div id="change-password-form">
     <h2>Change Password</h2>
     <form onSubmit={onSubmit}>
       <label>Current Password:</label>
-      <input name="current-password" type="password" value={currentPassword} onChange={setCurrentPassword} placeholder="Enter Current Password..."/>
+      <input name="current-password" type="password" value={currentPassword} onChange={setCurrentPassword} placeholder="Enter Current Password..." />
 
       <label>New Password:</label>
-      <input name="new-password" type="password" value={confirmPassword} onChange={setConfirmPassword} placeholder="Enter New Password..."/>
+      <input name="new-password" type="password" value={newPassword} onChange={setNewPassword} placeholder="Enter New Password..." />
 
       <label>Confirm New Password:</label>
-      <input name="confirm-new-password" type="password" value={confirmNewPassword} onChange={setConfirmNewPassword} placeholder="Confirm New Password..."/>
-      <input type="submit" />
+      <input name="confirm-new-password" type="password" value={confirmNewPassword} onChange={setConfirmNewPassword} placeholder="Confirm New Password..." />
+      <input type="submit" value="Log In" />
+
+      {
+        // if there is an error, render it, otherwise render a react fragment (the react markup equivilent of NULL)
+        error !== null ? <div>{error}</div> : <></>
+      }
     </form>
   </div>
 }
@@ -150,12 +195,16 @@ const InstructionDisplay = () => {
 }
 
 const ProfileDisplay = props => {
+  //const [username, email, id] = props.user; // fancy JS object destructuring, to seperate out variables from the user property
   const LogoutButton = () => <button onClick={() => { }}>Logout</button>
 
-  return props.user ? <div>Please Sign In</div> : <div>
-    User Display!
-    <LogoutButton />
-  </div>
+
+  return props.user ? <div>Please Sign In</div>
+    :
+    <div>
+      User Display!
+      <LogoutButton />
+    </div>
 }
 
 export default App;

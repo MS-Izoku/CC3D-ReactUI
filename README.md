@@ -1,6 +1,8 @@
 # CC3D Challenge UI
 This is where we can use the C# API that we made as a companion application, which both connect to the same Firebase Store.  This is a baseline React application using Firebase's own packages, as well as integration with the firebase online UI (from their website).  This acts as the entrypoint to the API application written in C#, which is run elsewhere (as it would be in a development setting, since front and backend servers should be seperate to a degree unless using MVC or similar archetecture).
 
+Due to the simple nature of this SPA, there will be no router or routing, rather all aspects of the simple application will be done using State Management.  If there were to be multiple pages in this web context, there would need to be either a cookie or an item in localStorage (the less-safe option) that represents user data for authentication purposes.
+
 
 ## Components
 Due to the nature of how Async code works, there are actually a few requests that need to be made independently.  Each of these requests involve a single component, as well as the firebase integration in our base file.
