@@ -1,9 +1,10 @@
 import './App.css';
 import { useState } from 'react';
 
+
+
 const App = () => {
   const [user, setUser] = useState({})
-  const [firebaseToken , setFirebaseToken] = useState({})
 
   const userExists = () => {
     if (Object.keys(user).length > 0) return false;
@@ -49,7 +50,7 @@ const App = () => {
 
 
 const LoginForm = props => {
-  const [username, setUsername] = useState("")
+  //const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
 
@@ -60,11 +61,11 @@ const LoginForm = props => {
   return <div>
     <h2>Login</h2>
     <form onSubmit={onSubmit}>
-      <label>Username:</label>
-      <input type="text" name="username" onChange={setUsername} value={username} />
+      <label>Email:</label>
+      <input type="email" name="email" onChange={setEmail} value={email} placeholder="Enter Email Address..."/>
 
       <label>Password:</label>
-      <input type="password" name="password" onChange={setPassword} value={password} />
+      <input type="password" name="password" onChange={setPassword} value={password} placeholder="Enter Password..." />
 
 
       <input type="submit" />
@@ -86,16 +87,16 @@ const CreateAccountForm = props => {
     <h2>Create New Account</h2>
     <form onSubmit={onSubmit}>
       <label>Username:</label>
-      <input type="text" name="username" onChange={setUsername} value={username} />
+      <input type="text" name="username" onChange={setUsername} value={username} placeholder="Enter Username..."/>
 
       <label>Email:</label>
-      <input type="email" name="email" onChange={setEmail} value={email} />
+      <input type="email" name="email" onChange={setEmail} value={email} placeholder="Enter Email..."/>
 
       <label>Password:</label>
-      <input type="password" name="password" onChange={setPassword} value={password} />
+      <input type="password" name="password" onChange={setPassword} value={password} placeholder="Enter Password..."/>
 
       <label>Confirm Password:</label>
-      <input type="password-confirmation" name="password-confirmation" onChange={setPasswordConfirmation} value={passwordConfirmation} />
+      <input type="password-confirmation" name="password-confirmation" onChange={setPasswordConfirmation} value={passwordConfirmation} placeholder="Confirm Password..."/>
 
       <input type="submit" />
     </form>
@@ -115,13 +116,13 @@ const ChangePasswordForm = props => {
     <h2>Change Password</h2>
     <form onSubmit={onSubmit}>
       <label>Current Password:</label>
-      <input name="current-password" type="password" value={currentPassword} onChange={setCurrentPassword} />
+      <input name="current-password" type="password" value={currentPassword} onChange={setCurrentPassword} placeholder="Enter Current Password..."/>
 
       <label>New Password:</label>
-      <input name="new-password" type="password" value={confirmPassword} onChange={setConfirmPassword} />
+      <input name="new-password" type="password" value={confirmPassword} onChange={setConfirmPassword} placeholder="Enter New Password..."/>
 
       <label>Confirm New Password:</label>
-      <input name="confirm-new-password" type="password" value={confirmNewPassword} onChange={setConfirmNewPassword} />
+      <input name="confirm-new-password" type="password" value={confirmNewPassword} onChange={setConfirmNewPassword} placeholder="Confirm New Password..."/>
       <input type="submit" />
     </form>
   </div>
@@ -133,15 +134,15 @@ const InstructionDisplay = () => {
     <p>Please complete the assessment below. If you have any questions or challenges while completing this assessment, feel free to reach out and ask for clarification.</p>
 
     <ul>
-    <li>Create a website that allows a user to create an account and then login to that account.
-      Their account should take a username, email, and password. There should be an option to change the password while logged in.
-      The user account database should be created in Firebase while the rest can be structured in whatever web development languages you’d like.</li>
+      <li>Create a website that allows a user to create an account and then login to that account.
+        Their account should take a username, email, and password. There should be an option to change the password while logged in.
+        The user account database should be created in Firebase while the rest can be structured in whatever web development languages you’d like.</li>
 
-    <li>This website should make a single API call from an API you have written in C#.</li>
+      <li>This website should make a single API call from an API you have written in C#.</li>
 
-    <li>Outside of these instructions, this assessment is open ended. Have fun with it and let your personal programming style shine through. Make it as weird or unique as you’d like.</li>
+      <li>Outside of these instructions, this assessment is open ended. Have fun with it and let your personal programming style shine through. Make it as weird or unique as you’d like.</li>
 
-    <li>Please document your code. Feel free to host this project online for review but the final submission will be in the form of a GitHub repository link. This is due by next Friday, the 17th.</li>
+      <li>Please document your code. Feel free to host this project online for review but the final submission will be in the form of a GitHub repository link. This is due by next Friday, the 17th.</li>
     </ul>
 
     <p>Thank you for your interest in Custom Color 3D!</p>
@@ -149,7 +150,7 @@ const InstructionDisplay = () => {
 }
 
 const ProfileDisplay = props => {
-  const LogoutButton = () => <button onClick={()=>{}}>Logout</button>
+  const LogoutButton = () => <button onClick={() => { }}>Logout</button>
 
   return props.user ? <div>Please Sign In</div> : <div>
     User Display!

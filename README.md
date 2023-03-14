@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+# CC3D Challenge UI
+This is where we can use the C# API that we made as a companion application, which both connect to the same Firebase Store.  This is a baseline React application using Firebase's own packages, as well as integration with the firebase online UI (from their website).  This acts as the entrypoint to the API application written in C#, which is run elsewhere (as it would be in a development setting, since front and backend servers should be seperate to a degree unless using MVC or similar archetecture).
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Components
+Due to the nature of how Async code works, there are actually a few requests that need to be made independently.  Each of these requests involve a single component, as well as the firebase integration in our base file.
+This is an SPA which incorporates the Firebase lifecycle using an existing token, and a similar approach can be used by any other application looking to communicate with our API.
 
-In the project directory, you can run:
 
-### `npm start`
+### Login Form
+Existing users need a way to access information on their account, and thusly, we have a Form component.  This form has 2 main fields:
+* Email, which corresponds to a unique email on the firebase server
+* Password, which is the actual string password the user knows, or is stored on their browser.  This is not made a hash at this point in the frontend facing application
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The Username field is only relevant when creating an account, as it is a display name.  It is not used in any login at this time due to the fact that emails are more unique and secure.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+### Create Account Form
+While we can create users using the Firebase interface online, we should also be able to do so in an application, just in the same way it would be in a production environment.  Customers and application users will not be able to get into our Firebase project and set up an account that way, nor should they for app security reasons.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This is why I chose to create multiple routes, which allows us to do things the way an end-user would normally experience them.
 
-### `npm run build`
+To create an account, we need 3-4 things, noted in our Form:
+* Username, which is how a user identifies themselves as a user on this website
+* Email, the bread and butter of our authentication to ensure unique accounts per user (to the best of our ability here)
+* Password / Password Confirmation, which serve as a unique value that ONLY a user knows, which gives them access to their account.  It is not stored as plaintext in any database anywhere, and is turned from a string into a hash during the encryption process.  Luckily, we do not need to do any of that manually, and a user only needs to write a memorable password twice (once normally, and another to confirm).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### User Display / Logout Button
+The User display is the component that tells you that you've logged in, displaying your username, a welcome message, and a button that allows the user to logout of this device.
