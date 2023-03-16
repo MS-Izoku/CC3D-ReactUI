@@ -30,8 +30,8 @@ const CreateAccountForm = props => {
         }
     }
 
-    return <div>
-        <h2>Create New Account</h2>
+    return <div className='neumorphic-invert'>
+        <h2>Create Account</h2>
         <form onSubmit={onSubmit}>
             <label>Username:</label>
             <input type="text" name="username" onChange={e => { setUsername(e.target.value) }} value={username} placeholder="Enter Username..." />

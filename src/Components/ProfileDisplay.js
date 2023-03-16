@@ -21,12 +21,16 @@ const ProfileDisplay = props => {
         return () => { listenForAuthChange() }
     }, [])
 
-    return user === null ? <div>Please Sign In</div>
-        :
-        <div>
-            {user.displayName}
-            <LogoutButton />
-        </div>
+    return <div id="profile">
+        {
+            user === null ? <p>Please Sign In</p> :
+                <>
+                    <p>{user.displayName}</p>
+                    <LogoutButton />
+
+                </>
+        }
+    </div>
 }
 
 export default ProfileDisplay

@@ -1,7 +1,7 @@
 import React from 'react'
 
 const InstructionDisplay = () => {
-    return <div id="instructions">
+    return <div id="instructions" className="neumorphic">
         <h2>Challenge instructions</h2>
         <p>Please complete the assessment below. If you have any questions or challenges while completing this assessment, feel free to reach out and ask for clarification.</p>
 

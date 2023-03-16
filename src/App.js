@@ -10,6 +10,8 @@ import ProfileDisplay from './Components/ProfileDisplay';
 import TriviaRenderer from './Components/TriviaRenderer';
 import { onAuthStateChanged } from 'firebase/auth';
 
+import logo from './CC3D-Logo.png'
+
 const App = () => {
   const [user, setUser] = useState(null)
   const [unserializedUserData, setUnserializedUserData] = useState({})
@@ -34,18 +36,21 @@ const App = () => {
         setUser(authUser)
       }
       else setUser(null)
+
+      return () => { listenForAuthChange() }
     })
   }, [])
 
   return (
     <div id="App">
       <header>
-        <h1>CC3D Challenge</h1>
-        <p>This is a basic user-interface that allows us to access the ASP.Net API connected to Firebase.</p>
-        <p>This interface is a standard React-based implementaiton.</p>
+        <div id="logo-space">
+          <h1><img src={logo} alt="logo" id="logo" /><span>Challenge UI</span></h1>
+          <p className='header-text'>This is a basic user-interface that allows us to access the ASP.Net API connected to Firebase.</p>
+          <p className='header-text'>This interface is a standard React-based implementaiton.</p>
+        </div>
+        <ProfileDisplay user={user} />
       </header>
-
-      <ProfileDisplay user={user} />
 
       <div id="main-container">
         <InstructionDisplay />
@@ -53,7 +58,7 @@ const App = () => {
         {
           // replace this with a better user-check
           user === null ?
-            <div id="login-or-create-forms">
+            <div id="login-or-create-forms" className="neumorphic">
               <LoginForm setUserConfig={setUserConfig} />
 
               <CreateAccountForm setUserConfig={setUserConfig} />

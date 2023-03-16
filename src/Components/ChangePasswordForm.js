@@ -31,7 +31,7 @@ const ChangePasswordForm = props => {
         return () => { listenForAuthChange() }
     }, [])
 
-    return <div id="change-password-form">
+    return <div id="change-password-form" className="neumorphic">
         <h2>Change Password</h2>
         <form onSubmit={onSubmit}>
             <label>New Password:</label>

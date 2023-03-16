@@ -19,7 +19,7 @@ const LoginForm = props => {
             })
     }
 
-    return <div>
+    return <div className='neumorphic-invert'>
         <h2>Login</h2>
         <form onSubmit={onSubmit}>
             <label>Email:</label>

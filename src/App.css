@@ -1,51 +1,188 @@
-body{
+:root {
+  --primary: aqua;
+
+  --blackTone: 18;
+  --background: rgb(var(--blackTone), var(--blackTone), var(--blackTone));
+
+  --whiteTone: 245;
+  color: rgb(var(--whiteTone), var(--whiteTone), var(--whiteTone));
+
+  --bg-img: url(../public/images/pexels-pixabay-36717.jpg);
+}
+
+#logo {
+  max-width: 20em;
+}
+
+body {
+  background-color: var(--background);
+  background-image: var(--bg-img);
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 > span {
+  margin-left: 0.5em;
+}
+
+#profile-display {
+}
+
+#profile > p{
+  margin: auto;
+}
+
+header {
+  display: flex;
+  text-align: center;
+  background: rgb(var(--whiteTone), var(--whiteTone), var(--whiteTone), 0.1);
+  padding-bottom: 1em;
+
+  backdrop-filter: blur(20px);
+
+  box-shadow: 0px 9px 16px 7px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1em;
+}
+
+.header-text {
+  padding: 0px;
+  margin: 0px;
+}
+
+header > div#logo-space {
+  margin: auto;
+}
+
+#main-container {
+  display: flex;
+}
+
+#instructions {
+  max-width: 30em;
   padding: 1em;
 }
 
-header{
+#login-or-create-forms {
+  max-width: 45%;
   display: flex;
-  flex-direction: column;
+
+  padding: 0.5em;
+}
+
+#change-password-form {
+  border-radius: 0.5em;
+  max-width: 45%;
+  padding: 0.5em;
+}
+
+h2 {
   text-align: center;
+  text-decoration: underline;
 }
 
-#main-container{
-  display: flex;
+input[type="submit"] {
+  margin-top: auto;
+  width: 100%;
 }
 
-#instructions{
-  border: 2px solid black;
-  border-radius: 0.5em;
-  max-width: 45%;
-  padding: 0.5em;
-}
-
-#login-or-create-forms{
-  border: 2px solid black;
-  border-radius: 0.5em;
-  max-width: 45%;
-  display: flex;
-
-  padding: 0.5em;
-}
-
-#change-password-form{
-  border: 2px solid black;
-  border-radius: 0.5em;
-  max-width: 45%;
-  padding: 0.5em;
-}
-
-h2{
-  text-align: center;
-}
-
-input[type="submit"]{
-  margin-top: 1em;
-}
-
-
-form{
+form {
   padding: 1em;
   display: flex;
   flex-direction: column;
+  height: 75%;
+}
+
+button,
+input[type="submit"] {
+  background: none;
+  border: none;
+  outline: none;
+  max-width: 190px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 9999px;
+  min-height: 3em;
+
+  color: #fff;
+
+  font-weight: bold;
+
+  transition: all 0.125s ease-in-out;
+
+  background-color: rgba(50, 50, 93, 0.25);
+
+  box-shadow: inset 2px 5px 10px rgba(250, 250, 250, 0.25),
+    inset 2px 5px 10px rgba(5, 5, 5, 0.5);
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background-color: rgb(
+    var(--whiteTone),
+    var(--whiteTone),
+    var(--whiteTone),
+    0.25
+  );
+
+  box-shadow: inset 2px 5px 10px rgba(5, 5, 5, 0.5),
+    inset 2px 5px 10px rgba(250, 250, 250, 0.5);
+}
+
+input {
+  border-radius: 1em;
+  height: 2em;
+  padding: 0.5em;
+  background: rgba(50, 50, 93, 0.25);
+  border: none;
+  color: white;
+  margin-bottom: 0.75em;
+}
+
+label {
+  text-align: center;
+}
+
+.neumorphic {
+  overflow: hidden;
+  margin: 0.5em;
+  backdrop-filter: blur(0.5em);
+  border-radius: 0.5em;
+
+  --neu-1: #bebebe08;
+  --neu-2: #ffffff0e;
+
+  border-radius: 1em;
+  background: #e0e0e006;
+  box-shadow: inset 41px 41px 82px var(--neu-1),
+    inset -41px -41px 82px var(--neu-2), 41px 41px 82px var(--neu-2),
+    -41px -41px 82px var(--neu-1);
+
+  background: rgb(var(--whiteTone), var(--whiteTone), var(--whiteTone), 0.1);
+
+  box-shadow: 0px 9px 16px 7px rgba(0, 0, 0, 0.45),
+    rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
+}
+
+.neumorphic-invert {
+  overflow: hidden;
+  backdrop-filter: blur(0.5em);
+  border-radius: 1em;
+  margin: 0.25em;
+
+  --neu-2: #bebebe08;
+  --neu-1: #ffffff0e;
+
+  background: #e0e0e006;
+  box-shadow: inset 41px 41px 82px var(--neu-1),
+    inset -41px -41px 82px var(--neu-2), 41px 41px 82px var(--neu-2),
+    -41px -41px 82px var(--neu-1);
+
+  background: rgb(var(--whiteTone), var(--whiteTone), var(--whiteTone), 0.1);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
 }
