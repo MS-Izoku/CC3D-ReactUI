@@ -3,6 +3,20 @@ This is where we can use the C# API that we made as a companion application, whi
 
 Due to the simple nature of this SPA, there will be no router or routing, rather all aspects of the simple application will be done using State Management.  If there were to be multiple pages in this web context, there would need to be either a cookie or an item in localStorage (the less-safe option) that represents user data for authentication purposes.
 
+## App Setup / How To
+* run npm install in the project directory to install all current packages
+* run npm start afterward to start the application, it should be on http://localhost:3000 (HTTP)
+* If you're missing any packages, check to see if Node is installled, which is the basic requirement for npm
+
+* The C# API, for the sake of this application, should be on https://localhost:7047 (HTTPS, not HTTP)
+
+* After startup, you can either create an account or log into an existing one
+* When signed in (using Firebase as the authentication DB), you click one of the buttons to get one of the following responses from the C# API (assuming it is running)
+
+* One Piece of One Piece Trivia (I do apologize for this dastardly play on words)
+* Every Piece of One Piece Trivia (an index route)
+
+* While NYI at this point in the UI, there is functionality in the C# Api to allow for posting, updating, and deleting data from the Entity Framework Core DB
 
 ## Components
 Due to the nature of how Async code works, there are actually a few requests that need to be made independently.  Each of these requests involve a single component, as well as the firebase integration in our base file.
