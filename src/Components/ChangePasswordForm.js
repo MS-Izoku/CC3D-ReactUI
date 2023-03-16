@@ -1,5 +1,5 @@
-import React, { useState , useEffect } from "react";
-import { getAuth , onAuthStateChanged, updatePassword } from "firebase/auth";
+import React, { useState, useEffect } from "react";
+import { onAuthStateChanged, updatePassword } from "firebase/auth";
 import { auth } from "../firebase";
 
 const ChangePasswordForm = props => {
@@ -10,7 +10,7 @@ const ChangePasswordForm = props => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        if (newPassword !== confirmNewPassword) {
+        if (newPassword !== confirmNewPassword && user !== null) {
             setError("New Password and Confirmation must match");
         }
         else {

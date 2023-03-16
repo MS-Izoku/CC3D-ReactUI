@@ -14,6 +14,7 @@ const LoginForm = props => {
                 props.setUserConfig(firebaseCredentials)
             })
             .catch(err => {
+                setError(err)
                 console.log(err)
             })
     }
