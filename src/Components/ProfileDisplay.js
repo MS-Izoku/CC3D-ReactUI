@@ -1,14 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { onAuthStateChanged, signOut } from 'firebase/auth'
+import { auth } from "../firebase"
 
 const ProfileDisplay = props => {
-    //const [username, email, id] = props.user; // fancy JS object destructuring, to seperate out variables from the user property
-    const LogoutButton = () => <button onClick={() => { }}>Logout</button>
+    const [user, setUser] = useState(null)
 
+    const LogoutButton = () => <button onClick={() => {
+        signOut(auth)
+    }}>Logout</button>
 
-    return props.user ? <div>Please Sign In</div>
+    useEffect(() => {
+        // listen for any change to signin/up status, then run this method
+        const listenForAuthChange = onAuthStateChanged(auth, authUser => {
+            if (authUser) {
+                setUser(authUser)
+            }
+            else setUser(null)
+        })
+
+        return () => { listenForAuthChange() }
+    }, [])
+
+    return user === null ? <div>Please Sign In</div>
         :
         <div>
-            User Display!
+            {user.displayName}
             <LogoutButton />
         </div>
 }

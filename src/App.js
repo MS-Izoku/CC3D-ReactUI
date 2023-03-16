@@ -1,25 +1,41 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { auth } from './firebase'
 
 import ChangePasswordForm from './Components/ChangePasswordForm';
 import CreateAccountForm from './Components/CreateAccountForm'
 import InstructionDisplay from './Components/InstructionDisplay'
 import LoginForm from './Components/LoginForm'
 import ProfileDisplay from './Components/ProfileDisplay';
+import TriviaRenderer from './Components/TriviaRenderer';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const App = () => {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(null)
+  const [unserializedUserData, setUnserializedUserData] = useState({})
 
-  const userExists = () => {
-    if (Object.keys(user).length > 0) return false;
-
-    for (const key in Object.keys(user)) {
-      if (key === undefined || key === "") return false;                                    // there are blank keys
-      if (user[key] === null || user[key] !== undefined || user[key] === "") return false;  // if there are null values in any key/value pair
+  const setUserConfig = (firebaseCredentials) => {
+    const fbUser = firebaseCredentials.user
+    const configuredUserObj = {
+      email: fbUser.email,
+      username: fbUser.displayName,
+      credentials: firebaseCredentials
     }
 
-    return true;
+    console.log(configuredUserObj)
+    setUnserializedUserData(firebaseCredentials)
+    setUser(configuredUserObj)
   }
+
+  useEffect(() => {
+    // listen for any change to signin/up status, then run this method
+    const listenForAuthChange = onAuthStateChanged(auth, authUser => {
+      if (authUser) {
+        setUser(authUser)
+      }
+      else setUser(null)
+    })
+  }, [])
 
   return (
     <div id="App">
@@ -30,22 +46,23 @@ const App = () => {
       </header>
 
       <ProfileDisplay user={user} />
+
       <div id="main-container">
         <InstructionDisplay />
 
         {
           // replace this with a better user-check
-          userExists ?
+          user === null ?
             <div id="login-or-create-forms">
-              <LoginForm setUser={setUser} />
+              <LoginForm setUserConfig={setUserConfig} />
 
-              <CreateAccountForm setUser={setUser} />
+              <CreateAccountForm setUserConfig={setUserConfig} />
             </div>
             :
-            <ChangePasswordForm user={user} />
+            <ChangePasswordForm user={user} unserializedUserData={unserializedUserData} />
         }
-
       </div>
+      {user === null ? <></> : <TriviaRenderer />}
     </div>
   );
 }

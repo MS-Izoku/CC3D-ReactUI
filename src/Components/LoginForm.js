@@ -9,12 +9,12 @@ const LoginForm = props => {
 
     const onSubmit = (e) => {
         e.preventDefault(); // prevents the page from auto-refreshing when logging in
-
         signInWithEmailAndPassword(auth, email, password)
-            .then(resp => {
-                // this is a place to temporatily log the response from the Firebase Server
-                console.log("User Credentials from Server (FOR DEVELOPMENT/DEMONSTRATION PURPOSES ONLY)", resp)
-                return resp.json() // turn our server response into parsablle JSON
+            .then(firebaseCredentials =>{
+                props.setUserConfig(firebaseCredentials)
+            })
+            .catch(err => {
+                console.log(err)
             })
     }
 

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { auth } from '../firebase' // this is the auth method from the firebase.js file we made locally, not the firebase npm package
-import { createUserWithEmailAndPassword } from 'firebase/auth' // this method is actually from the firebase npm package, not the local firebase.js config
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth' // this method is actually from the firebase npm package, not the local firebase.js config
+
+
 
 const CreateAccountForm = props => {
     const [username, setUsername] = useState("")
@@ -17,13 +19,14 @@ const CreateAccountForm = props => {
         else {
             createUserWithEmailAndPassword(auth, email, password)
                 .then(resp => {
-                    // this is a place to temporatily log the response from the Firebase Server
                     console.log("User Credentials from Server (FOR DEVELOPMENT/DEMONSTRATION PURPOSES ONLY)", resp)
-                    // return resp.json()
+                    updateProfile(auth.currentUser, { displayName: username })
+                    return resp
                 })
-                .then(json => {
-
+                .then(user => {
+                    props.setUserConfig(user)
                 })
+                .catch(err => { console.log(err) })
         }
     }
 
@@ -42,7 +45,7 @@ const CreateAccountForm = props => {
             <label>Confirm Password:</label>
             <input type="password" name="password-confirmation" onChange={e => setPasswordConfirmation(e.target.value)} value={passwordConfirmation} placeholder="Confirm Password..." />
 
-            <input type="submit" value="Log In" />
+            <input type="submit" value="Create Account!" />
 
             {
                 // if there is an error, render it, otherwise render a react fragment (the react markup equivilent of NULL)
