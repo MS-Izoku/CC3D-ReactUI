@@ -64,10 +64,13 @@ const App = () => {
               <CreateAccountForm setUserConfig={setUserConfig} />
             </div>
             :
+            <>
             <ChangePasswordForm user={user} unserializedUserData={unserializedUserData} />
+            <TriviaRenderer />
+            </>
         }
       </div>
-      {user === null ? <></> : <TriviaRenderer />}
+      {/* {user === null ? <></> : <TriviaRenderer />} */}
     </div>
   );
 }
